@@ -11,13 +11,13 @@ class OTTO:
         return round((self.efficiency_value * 100), round_off)
 
 class DIESEL(OTTO):
-    def __init__(self, compression_ratio: float, cut_off: float):
-        self.cut_off = cut_off
+    def __init__(self, compression_ratio: float, cut_off_ratio: float):
+        self.cut_off_ratio = cut_off_ratio
         super().__init__(compression_ratio)
         self.efficiency_value = self.efficiency()
     def efficiency(self):
-        calc_nume = math.pow(self.cut_off, GAMMA) - 1
-        calc_deno = (GAMMA * math.pow(self.compression_ratio, (GAMMA - 1))) * (self.cut_off - 1)
+        calc_nume = math.pow(self.cut_off_ratio, GAMMA) - 1
+        calc_deno = (GAMMA * math.pow(self.compression_ratio, (GAMMA - 1))) * (self.cut_off_ratio - 1)
         calc = calc_nume / calc_deno
         return 1 - calc
 
@@ -30,14 +30,14 @@ class BRAYTON(OTTO):
         return 1 - calc
 
 class DUAL(OTTO):
-    def __init__(self, compression_ratio: float, cut_off: float, pressure_ratio: float):
-        self.cut_off = cut_off
+    def __init__(self, compression_ratio: float, cut_off_ratio: float, pressure_ratio: float):
+        self.cut_off_ratio = cut_off_ratio
         self.pressure_ratio = pressure_ratio 
         super().__init__(compression_ratio)
         self.efficiency_value = self.efficiency()
     def efficiency(self):
-        calc_nume = (math.pow(self.cut_off, GAMMA) * self.pressure_ratio) - 1
-        calc_deno = math.pow(self.compression_ratio, (GAMMA - 1)) * ((self.pressure_ratio - 1) + (GAMMA*self.pressure_ratio*(self.cut_off - 1)))
+        calc_nume = (math.pow(self.cut_off_ratio, GAMMA) * self.pressure_ratio) - 1
+        calc_deno = math.pow(self.compression_ratio, (GAMMA - 1)) * ((self.pressure_ratio - 1) + (GAMMA*self.pressure_ratio*(self.cut_off_ratio - 1)))
         calc = calc_nume / calc_deno
         return 1 - calc
 
