@@ -54,6 +54,7 @@ while True:
     try:
         try: user_input = int(input("┎"+"─"*39+"┒"+"\n  Select any one of the Option\n  [1] OTTO Cycle\n  [2] Diesel Cycle\n  [3] Brayton Cycle\n  [4] Dual Cycle\n  > "))
         except ValueError: print("  Enter a Valid Input not Characters"); print("┖"+"─"*39+"┚"); continue
+        if user_input not in [x for x in range(1, 5)]: print(" Not a Valid Option ! "); print("┖"+"─"*39+"┚"); continue
         try: compression_ratio = float(input("  Compression Ratio Value : "))
         except ValueError: print("  Enter a Valid Input not Characters"); continue
         if user_input == 1: print(f"  Otto Cycle Efficiency Value : {OTTO(compression_ratio).efficiency_percentage()} %")
