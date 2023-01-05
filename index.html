@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+    <title>Thermodynamics Cycles</title>
+    <meta name="title" content="Thermodynamics Cycles">
+    <meta name="description" content="Calculate Thermodynamics Cycle Effeciencies - Made by Yuvaraja.M">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://td.msc-bot.tech/">
+    <meta property="og:title" content="Thermodynamics Cycle Effeciency Calculator">
+    <meta property="og:description" content="Calculate Thermodynamics Cycle Effeciencies - Made by Yuvaraja.M">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/64340067/210832721-5991e90a-fcbf-4376-9dee-f2196aa9d964.jpg">
+    <style>
+        h1 {
+            font-family: "Poppins";
+            font-size: 2em;
+            font-weight: bolder;
+            text-align: center;
+            margin-bottom: -4px;
+        }
+        h2 {
+            font-family: "comfortaa";
+            font-weight: bolder;
+            font-size: 1em;
+            text-align: center;
+            margin-bottom: 2em;
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+        h3 {
+            font-family: "comfortaa";
+            font-size: 1em;
+            font-weight: bolder;
+            text-align: center;
+        }
+        h4 {
+            font-family: "comfortaa";
+            font-weight: bolder;
+            text-align: center;
+            margin-bottom: 2em;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            background-image: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d);
+        }
+        input {
+            font-family: "Poppins";
+            border: none;
+            padding: 1em;
+            margin: 5px;
+            padding: 0.6em;
+            border-radius: 0.8em;
+            box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        }
+        input:focus {
+            font-family: "Poppins";
+            border: none;
+            padding: 1em;
+            margin: 5px;
+            padding: 0.6em;
+            border-radius: 0.8em;
+            transition: all 0.3s;
+        }
+        button {
+            font-family: "comfortaa";
+            border: 2px solid gainsboro;
+            font-weight: 600;
+            padding: 0.6em;
+            margin: 8px;
+            border-radius: 0.5em;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        }
+        button:hover {
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        }
+        select {
+            font-family: "comfortaa";
+            border: 2px solid gainsboro;
+            font-weight: 600;
+            padding: 0.1em;
+            margin-left: 6px;
+            margin-top: 10px;
+            border-radius: 0.5em;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+            height: 2em;
+        }
+        span {
+            font-size: 1.3em;
+            font-family: "Poppins";
+            font-weight: bolder;
+        }
+        .mainframe {
+            background-color: rgb(240, 231, 231);
+            display: flex;
+            width: 390px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            margin-top: 5em;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        }
+        .options {
+            display: flex;
+            flex-direction: row;
+        }
+        .author {
+            font-family: "comfortaa";
+            font-weight: bolder;
+            font-size: 1em;
+            text-align: center;
+            border: 2px solid transparent;
+            background-color: rgb(240, 231, 231);
+            margin-top: 10px;
+            width: 15em;
+            border-radius: 18px;
+            padding: 3px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        }
+        @media only screen and (max-width: 600px) {
+            .mainframe {
+                width: 90%;
+            }
+            select {
+                margin-left: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mainframe">
+        <h1 id="headline">Effeciency Calculator</h4>
+        <div class="options" id="options">
+            <h3>Select the Cycle</h3> 
+            <select title="cycles" name="cycles" id="cycles" onchange="change_cycle()">
+                <option value="otto">Otto</option>
+                <option value="diesel">Diesel</option>
+                <option value="brayton">Brayton</option>
+                <option value="dual">Dual</option>
+            </select>
+        </div>
+        <input class="rs" placeholder="Compression Ratio" id="compression" type="number">
+        <input placeholder="Cut-Off Ratio" id="cut_off" type="number">
+        <input placeholder="Pressure Ratio" id="pressure" type="number">
+        <button id="calculate" onclick="calculate()">Calculate</button>
+        <h2 id="output"></h2>
+    </div>
+    <span class="author">- Created by Yuvaraja.M CSE-B</span> 
+    <script>
+        const GAMMA = 1.4
+        let current_cycle = 'otto'
+        let output = document.getElementById('output')
+        let cycles = document.getElementById('cycles')
+        let compression_ratio = document.getElementById('compression')
+        let cut_off_ratio = document.getElementById('cut_off')
+        let pressure_ratio = document.getElementById('pressure')
+        cut_off_ratio.style = "display: none;" ; pressure_ratio.style = 'display: none;'
+        function change_cycle() {
+            current_cycle = cycles.value
+            if (current_cycle == 'otto') { cut_off_ratio.style = 'display: none;'; pressure_ratio.style = 'display: none;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
+            if (current_cycle == 'diesel') { cut_off_ratio.style = 'display: solid;'; pressure_ratio.style = 'display: none;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
+            if (current_cycle == 'brayton') { cut_off_ratio.style = 'display: none;'; pressure_ratio.style = 'display: none;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
+            if (current_cycle == 'dual') { cut_off_ratio.style = 'display: solid;'; pressure_ratio.style = 'display: solid;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
+        }
+        function calculate() {
+            if (current_cycle == 'otto') { otto() }
+            if (current_cycle == 'diesel') { diesel() }
+            if (current_cycle == 'brayton') { brayton() }
+            if (current_cycle == 'dual') { dual() }
+        }
+        function otto() { output.innerText = `Otto Cycle Effeciency Value is ${((1-(1/(Math.pow(compression_ratio.value,(GAMMA-1)))))*100).toFixed(2)} %` }
+        function diesel() { output.innerText = `Diesel Cycle Effeciency Value is ${((1-((Math.pow(cut_off_ratio.value,GAMMA)-1)/((GAMMA*Math.pow(compression_ratio.value,(GAMMA-1)))*(cut_off_ratio.value-1))))*100).toFixed(2)} %` }
+        function brayton() { output.innerText = `Brayton Cycle Effeciency Value is ${((1-(1/(Math.pow(compression_ratio.value,((GAMMA-1)/GAMMA)))))*100).toFixed(2)} %` }
+        function dual() { output.innerText = `Dual Cycle Effeciency Value is ${((1-(((Math.pow(cut_off_ratio.value,GAMMA)*pressure_ratio.value)-1)/(Math.pow(compression_ratio.value,(GAMMA-1))*((pressure_ratio.value-1)+(GAMMA*pressure_ratio.value*(cut_off_ratio.value-1))))))*100).toFixed(2)} %` }
+    </script>
+</body>
+</html>
