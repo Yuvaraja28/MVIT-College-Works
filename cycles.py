@@ -22,11 +22,12 @@ class DIESEL(OTTO):
         return 1 - calc
 
 class BRAYTON(OTTO):
-    def __init__(self, compression_ratio: float):
-        super().__init__(compression_ratio)
+    def __init__(self, pressure_ratio: float):
+        self.pressure_ratio = pressure_ratio
+        super().__init__(pressure_ratio)
         self.efficiency_value = self.efficiency()
     def efficiency(self):
-        calc = 1 / (math.pow(self.compression_ratio, ((GAMMA - 1) / GAMMA)))
+        calc = 1 / (math.pow(self.pressure_ratio, ((GAMMA - 1) / GAMMA)))
         return 1 - calc
 
 class DUAL(OTTO):
@@ -55,15 +56,23 @@ while True:
         try: user_input = int(input("┎"+"─"*39+"┒"+"\n  Select any one of the Option\n  [1] OTTO Cycle\n  [2] Diesel Cycle\n  [3] Brayton Cycle\n  [4] Dual Cycle\n  > "))
         except ValueError: print("  Enter a Valid Input not Characters"); print("┖"+"─"*39+"┚"); continue
         if user_input not in [x for x in range(1, 5)]: print(" Not a Valid Option ! "); print("┖"+"─"*39+"┚"); continue
-        try: compression_ratio = float(input("  Compression Ratio Value : "))
-        except ValueError: print("  Enter a Valid Input not Characters"); continue
-        if user_input == 1: print(f"  Otto Cycle Efficiency Value : {OTTO(compression_ratio).efficiency_percentage()} %")
+        if user_input == 1:
+            try: compression_ratio = float(input("  Compression Ratio Value : "))
+            except ValueError: print("  Enter a Valid Input not Characters"); continue
+            print(f"  Otto Cycle Efficiency Value : {OTTO(compression_ratio).efficiency_percentage()} %")
         elif user_input == 2:
+            try: compression_ratio = float(input("  Compression Ratio Value : "))
+            except ValueError: print("  Enter a Valid Input not Characters"); continue
             try: cut_off_ratio = float(input("  Cut-Off     Ratio Value : "))
             except ValueError: print("  Enter a Valid Input not Characters"); continue
             print(f"  Diesel Cycle Efficiency Value : {DIESEL(compression_ratio, cut_off_ratio).efficiency_percentage()} %")
-        elif user_input == 3: print(f"  Brayton Cycle Efficiency : {BRAYTON(compression_ratio).efficiency_percentage()} %")
+        elif user_input == 3:
+            try: pressure_ratio = float(input("  Pressure    Ratio Value : "))
+            except ValueError: print("  Enter a Valid Input not Characters"); continue
+            print(f"  Brayton Cycle Efficiency : {BRAYTON(pressure_ratio).efficiency_percentage()} %")
         elif user_input == 4:
+            try: compression_ratio = float(input("  Compression Ratio Value : "))
+            except ValueError: print("  Enter a Valid Input not Characters"); continue
             try: cut_off_ratio = float(input("  Cut-Off     Ratio Value : "))
             except ValueError: print("  Enter a Valid Input not Characters"); continue
             try: pressure_ratio = float(input("  Pressure    Ratio Value : "))
