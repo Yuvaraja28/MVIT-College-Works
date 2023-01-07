@@ -13,6 +13,7 @@
     <meta property="og:title" content="Thermodynamics Cycle Efficiency Calculator">
     <meta property="og:description" content="Calculate Thermodynamics Cycle Efficiencies - Made by Yuvaraja.M">
     <meta property="og:image" content="https://user-images.githubusercontent.com/64340067/210832721-5991e90a-fcbf-4376-9dee-f2196aa9d964.jpg">
+    <link rel="icon" type="image/png" href="https://user-images.githubusercontent.com/64340067/210832721-5991e90a-fcbf-4376-9dee-f2196aa9d964.jpg">
     <style>
         h1 {
             font-family: "Poppins";
@@ -178,6 +179,10 @@
                 <option value="brayton">Brayton</option>
                 <option value="dual">Dual</option>
             </select>
+            <select title="convert" name="convert" id="convert" onchange="change_calculate()">
+                <option value="ratio">Ratio to Effic</option>
+                <option value="efficiency">Effic to Ratio</option>
+            </select>
         </div>
         <input class="rs" placeholder="Compression Ratio" id="compression" type="number" step="0.1">
         <input placeholder="Cut-Off Ratio" id="cut_off" type="number" step="0.1">
@@ -190,28 +195,37 @@
     <script>
         const GAMMA = 1.4
         let current_cycle = 'otto'
+        let current_convert = 'ratio'
         let output = document.getElementById('output')
         let cycles = document.getElementById('cycles')
+        let convert = document.getElementById('convert')
         let compression_ratio = document.getElementById('compression')
         let cut_off_ratio = document.getElementById('cut_off')
         let pressure_ratio = document.getElementById('pressure')
         cut_off_ratio.style = "display: none;" ; pressure_ratio.style = 'display: none;'
+        function change_calculate() {
+            current_convert = convert.value
+            if (current_convert == 'ratio') { compression_ratio.placeholder = 'Compression Ratio' }
+            if (current_convert == 'efficiency') { compression_ratio.placeholder = 'Efficiency in %' }
+        }
         function change_cycle() {
             current_cycle = cycles.value
-            if (current_cycle == 'otto') { compression_ratio.style = 'display: solid;'; cut_off_ratio.style = 'display: none;'; pressure_ratio.style = 'display: none;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
-            if (current_cycle == 'diesel') { compression_ratio.style = 'display: solid;'; cut_off_ratio.style = 'display: solid;'; pressure_ratio.style = 'display: none;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
-            if (current_cycle == 'brayton') { compression_ratio.style = 'display: none;'; cut_off_ratio.style = 'display: none;'; pressure_ratio.style = 'display: solid;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
-            if (current_cycle == 'dual') { compression_ratio.style = 'display: solid;'; cut_off_ratio.style = 'display: solid;'; pressure_ratio.style = 'display: solid;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
+            if (current_cycle == 'otto') { current_convert = "ratio"; convert.value = "ratio"; compression_ratio.placeholder = 'Compression Ratio'; compression_ratio.style = 'display: solid;'; cut_off_ratio.style = 'display: none;'; pressure_ratio.style = 'display: none;'; convert.style = 'display: solid;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
+            if (current_cycle == 'diesel') { current_convert = "ratio"; convert.value = "ratio"; compression_ratio.placeholder = 'Compression Ratio'; compression_ratio.style = 'display: solid;'; cut_off_ratio.style = 'display: solid;'; pressure_ratio.style = 'display: none;'; convert.style = 'display: none;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
+            if (current_cycle == 'brayton') { current_convert = "ratio"; convert.value = "ratio"; pressure_ratio.placeholder = 'Pressure Ratio'; compression_ratio.style = 'display: none;'; cut_off_ratio.style = 'display: none;'; pressure_ratio.style = 'display: solid;'; convert.style = 'display: none;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
+            if (current_cycle == 'dual') { current_convert = "ratio"; convert.value = "ratio"; compression_ratio.placeholder = 'Compression Ratio'; compression_ratio.style = 'display: solid;'; cut_off_ratio.style = 'display: solid;'; pressure_ratio.style = 'display: solid;'; convert.style = 'display: none;'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
         }
         function calculate() {
-            if (current_cycle == 'otto') { if (compression_ratio.value != '') { if (parseFloat(compression_ratio.value) == 0) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Otto Cycle Ratio cannot be 0</span>' } else { otto() } } }
-            if (current_cycle == 'diesel') { if ((compression_ratio.value != '') && (cut_off_ratio.value != '')) { if ((parseFloat(compression_ratio.value) == 0) || (parseFloat(cut_off_ratio.value) == 0)) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Diesel Cycle Ratio cannot be 0</span>' } else { diesel() } } }
-            if (current_cycle == 'brayton') { if (pressure_ratio.value != '') { if ((parseFloat(pressure_ratio.value) == 0)) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Brayton Cycle Compression Ratio cannot be 0</span>' } else { brayton() } } }
+            if (current_cycle == 'otto') { if (compression_ratio.value != '') { if (parseFloat(compression_ratio.value) == 0) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Otto Cycle Ratio cannot be 0</span>' } else { if (current_convert == "ratio") { otto() } else { otto_rev() } } } }
+           if (current_cycle == 'diesel') { if ((compression_ratio.value != '') && (cut_off_ratio.value != '')) { if ((parseFloat(compression_ratio.value) == 0) || (parseFloat(cut_off_ratio.value) == 0)) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Diesel Cycle Ratio cannot be 0</span>' } else { diesel() } } }
+            if (current_cycle == 'brayton') { if (pressure_ratio.value != '') { if ((parseFloat(pressure_ratio.value) == 0)) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Brayton Cycle Compression Ratio cannot be 0</span>' } else { if (current_convert == "ratio") { brayton() } else { brayton_rev() } } } }
             if (current_cycle == 'dual') { if ((compression_ratio.value != '') && (cut_off_ratio.value != '') && (pressure_ratio.value != '')) { if ((parseFloat(compression_ratio.value) == 0) || (parseFloat(cut_off_ratio.value) == 0) || (parseFloat(pressure_ratio.value) == 0)) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Dual Cycle Ratio cannot be 0</span>' } else { dual() } } }
         }
         function otto() { output.innerHTML = `Otto Cycle Efficiency Value is <span id='efficiency' class='efficiency'>${((1-(1/(Math.pow(compression_ratio.value,(GAMMA-1)))))*100).toFixed(2)} %</span>` }
+        function otto_rev() { output.innerHTML = `Otto Cycle Ratio Value is <span id='efficiency' class='efficiency'>${(Math.pow((1/(1-(compression_ratio.value/100))), 1/(GAMMA-1))).toFixed(2)}</span>` }
         function diesel() { output.innerHTML = `Diesel Cycle Efficiency Value is <span id='efficiency' class='efficiency'>${((1-((Math.pow(cut_off_ratio.value,GAMMA)-1)/((GAMMA*Math.pow(compression_ratio.value,(GAMMA-1)))*(cut_off_ratio.value-1))))*100).toFixed(2)} %</span>` }
         function brayton() { output.innerHTML = `Brayton Cycle Efficiency Value is <span id='efficiency' class='efficiency'>${((1-(1/(Math.pow(pressure_ratio.value,((GAMMA-1)/GAMMA)))))*100).toFixed(2)} %</span>` }
+        function brayton_rev() { output.innerHTML = `Brayton Cycle Ratio Value is <span id='efficiency' class='efficiency'>${((1-(1/(Math.pow(pressure_ratio.value,((GAMMA-1)/GAMMA)))))*100).toFixed(2)} </span>` }
         function dual() { output.innerHTML = `Dual Cycle Efficiency Value is <span id='efficiency' class='efficiency'>${((1-(((Math.pow(cut_off_ratio.value,GAMMA)*pressure_ratio.value)-1)/(Math.pow(compression_ratio.value,(GAMMA-1))*((pressure_ratio.value-1)+(GAMMA*pressure_ratio.value*(cut_off_ratio.value-1))))))*100).toFixed(2)} %</span>` }
         function total_visitors(data) { fetch('https://api.countapi.xyz/hit/yuvarajatd').then(function (response) { return response.json(); }).then(function (data) { document.getElementById("visitors").innerHTML = `Visitors - ${data.value}` }) }
         total_visitors()
