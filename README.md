@@ -1,3 +1,2 @@
-# Thermodynamics
-This Repo Consist of all TD Cycle Programs to Calculate the Values upon User Input
-- Thermodynamics Subject College Works :>
+## [MVIT](https://mvit.edu.in/) College Works
+I've Created this Repository to Publicly Maintain all my College Assignments and Works
