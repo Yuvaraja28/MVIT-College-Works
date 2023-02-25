@@ -2,237 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
-    <title>Thermodynamics Cycles</title>
-    <meta name="title" content="Thermodynamics Cycles">
-    <meta name="description" content="Calculate Thermodynamics Cycle Efficiencies - Made by Yuvaraja.M">
+    <title>Thermodynamics SCIMIT-23</title>
+    <meta name="title" content="Thermodynamics SCIMIT-23">
+    <meta name="description" content="Thermodynamics Problem Solver - Created by Yuvaraja.M, Solve an Otto or Diesel or Brayton or Dual Cycle Problems, Manakula Vinayagar Institute of Technology SCIMIT-23">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://td.msc-bot.tech/">
-    <meta property="og:title" content="Thermodynamics Cycle Efficiency Calculator">
-    <meta property="og:description" content="Calculate Thermodynamics Cycle Efficiencies - Made by Yuvaraja.M">
-    <meta property="og:image" content="https://user-images.githubusercontent.com/64340067/210832721-5991e90a-fcbf-4376-9dee-f2196aa9d964.jpg">
-    <link rel="icon" type="image/png" href="https://user-images.githubusercontent.com/64340067/210832721-5991e90a-fcbf-4376-9dee-f2196aa9d964.jpg">
-    <style>
-        .headline {
-            font-family: "Poppins";
-            font-size: 2em;
-            font-weight: bolder;
-            text-align: center;
-            margin-top: 8px;
-            font-variant: small-caps;
-        }
-        .options_headline {
-            font-family: "comfortaa";
-            font-weight: bolder;
-            font-size: 1em;
-            text-align: center;
-            margin-top: 0.8em;
-            margin-bottom: 2em;
-            margin-left: 8px;
-            margin-right: 2px;
-        }
-        .output {
-            font-family: "comfortaa";
-            font-size: 1em;
-            font-weight: bolder;
-            text-align: center;
-            margin-top: 1.2em;
-            margin-bottom: 1.5em;
-            margin-left: 10px;
-            margin-right: 10px;
-        }
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            flex-wrap: nowrap;
-            background-image: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d);
-        }
-        input {
-            font-family: "Poppins";
-            border: none;
-            margin-top: 8px;
-            padding: 0.6em;
-            border-radius: 0.8em;
-            box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-        }
-        input:focus {
-            font-family: "Poppins";
-            border: none;
-            border-radius: 0.8em;
-            transition: all 0.3s;
-        }
-        button {
-            font-family: "comfortaa";
-            border: 2px solid gainsboro;
-            font-weight: 600;
-            padding: 0.6em;
-            margin-top: 10px;
-            border-radius: 0.5em;
-            cursor: pointer;
-            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-        }
-        button:hover {
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-        }
-        select {
-            font-family: "comfortaa";
-            border: 2px solid gainsboro;
-            font-weight: 600;
-            padding: 0.1em;
-            margin-left: 6px;
-            margin-top: 2px;
-            border-radius: 0.5em;
-            cursor: pointer;
-            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-            height: 2em;
-        }
-        span {
-            font-size: 1.3em;
-            font-family: "Poppins";
-            font-weight: bolder;
-        }
-        a {
-            color: blue;
-            text-decoration: none;
-        }
-        .mainframe {
-            background-color: rgb(240, 231, 231);
-            display: flex;
-            width: 390px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 20px;
-            margin-top: 5em;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-        }
-        .options {
-            display: flex;
-            flex-direction: row;
-        }
-        .menu {
-            flex-direction: column;
-            margin: 5px;
-        }
-        .author {
-            font-family: "comfortaa";
-            font-weight: bolder;
-            font-size: 1em;
-            text-align: center;
-            border: 2px solid transparent;
-            background-color: rgb(240, 231, 231);
-            margin-top: 10px;
-            width: 15em;
-            border-radius: 18px;
-            padding: 3px;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-        }
-        .efficiency {
-            color: green;
-            font-family: "comfortaa";
-            font-weight: bolder;
-            font-size: 1em;
-            text-align: center;
-        }
-        .efficiency_error {
-            color: red;
-            font-family: "comfortaa";
-            font-weight: bolder;
-            font-size: 0.9em;
-            text-align: center;
-        }
-        .visitors {
-            font-family: "comfortaa";
-            font-weight: bolder;
-            font-size: 0.9em;
-            text-align: center;
-            border: 2px solid transparent;
-            background-color: rgb(240, 231, 231);
-            margin-top: 5px;
-            width: 10em;
-            border-radius: 18px;
-            padding: 1px;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-        }
-        @media only screen and (max-width: 600px) {
-            .mainframe {
-                width: 90%;
-            }
-            select {
-                margin-left: 5px;
-            }
-        }
-    </style>
+    <meta property="og:url" content="https://td.yuvaraja28.me">
+    <meta property="og:title" content="Thermodynamics Problem Solver">
+    <meta property="og:description" content="Thermodynamics Problem Solver - Created by Yuvaraja.M">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/64340067/220134320-7a69d7de-9d3c-4f94-9abb-18e6fdf75897.png">
+    <meta name="theme-color" content="#635985">
 </head>
 <body>
-    <div class="mainframe">
-        <span class="headline" id="headline">Efficiency Calculator</span>
-        <div class="options" id="options">
-            <span class="options_headline">Select the Cycle</span>
-            <div class="options menu">
-                <select title="cycles" name="cycles" id="cycles" onchange="change_cycle()">
-                    <option value="otto">Otto</option>
-                    <option value="diesel">Diesel</option>
-                    <option value="brayton">Brayton</option>
-                    <option value="dual">Dual</option>
-                </select>
-                <select title="convert" name="convert" id="convert" onchange="change_calculate()">
-                    <option value="ratio">Ratio to Efficiency</option>
-                    <option value="efficiency">Efficiency to Ratio</option>
-                </select>
-            </div>
-        </div>
-        <input class="rs" placeholder="Compression Ratio" id="compression" type="number" step="0.1">
-        <input placeholder="Cut-Off Ratio" id="cut_off" type="number" step="0.1">
-        <input placeholder="Pressure Ratio" id="pressure" type="number" step="0.1">
-        <button id="calculate" onclick="calculate()">Calculate</button>
-        <span class="output" id="output"></span>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins');
+        body {
+            background-color: rgb(37, 36, 36);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 5em;
+        }
+        .centred {
+            text-align: center;
+            padding: 15px;
+            border-radius: 20px;
+            background-image: linear-gradient(to left, rgb(41, 153, 153) 0%, #330867 100%);
+            box-shadow: 0 0 40px 10px rgb(42, 160, 160);       }
+        .content {
+            color: wheat;
+            font-family: 'Poppins';
+            font-weight: 400;
+            font-size: 1.5em;
+        }
+        .link {
+            color: cyan;
+            font-family: 'Poppins';
+            font-weight: 200;
+            font-size: 1em;
+        }
+    </style>
+    <div class="centred">
+        <a class="content">Redirecting to new Domain in <a class="content" id="seconds">5</a> <a class="content">seconds</a> <br> <br>
+        <a class="link" href="https://td.yuvaraja28.me">https://td.yuvaraja28.me</a>
     </div>
-    <span class="author">Created by <a href="https://mybio.msc-bot.tech" target="_blank" rel="noopener">Yuvaraja.M</a><br>CSE-B <a href="https://mvit.edu.in/" target="_blank" rel="noopener">MVIT</a></span>
-    <span id="visitors" class="visitors">Visitors - ?</span>
     <script>
-        const GAMMA = 1.4
-        let current_cycle = 'otto'
-        let current_convert = 'ratio'
-        let output = document.getElementById('output')
-        let options = document.getElementById('options') 
-        let cycles = document.getElementById('cycles')
-        let convert = document.getElementById('convert')
-        let compression_ratio = document.getElementById('compression')
-        let cut_off_ratio = document.getElementById('cut_off')
-        let pressure_ratio = document.getElementById('pressure')
-        cut_off_ratio.style = "display: none;" ; pressure_ratio.style = 'display: none;'
-        function change_calculate() {
-            current_convert = convert.value
-            if (current_convert == 'ratio') { if (current_cycle == 'otto') { compression_ratio.placeholder = 'Compression Ratio' } else if (current_cycle == 'brayton') { pressure_ratio.placeholder = 'Pressure Ratio' } }
-            if (current_convert == 'efficiency') { if (current_cycle == 'otto') { compression_ratio.placeholder = 'Efficiency in %' } else if (current_cycle == 'brayton') { pressure_ratio.placeholder = 'Efficiency in %' } }
-        }
-        function change_cycle() {
-            current_cycle = cycles.value
-            if (current_cycle == 'otto') { compression_ratio.style = 'display: solid;'; cut_off_ratio.style = 'display: none;'; pressure_ratio.style = 'display: none;'; convert.style = 'display: solid;'; options.style = 'margin-bottom: 0px;'; clear_inputs() }
-            if (current_cycle == 'diesel') { compression_ratio.style = 'display: solid;'; cut_off_ratio.style = 'display: solid;'; pressure_ratio.style = 'display: none;'; convert.style = 'display: none;'; options.style = 'margin-bottom: -20px;'; clear_inputs() }
-            if (current_cycle == 'brayton') { compression_ratio.style = 'display: none;'; cut_off_ratio.style = 'display: none;'; pressure_ratio.style = 'display: solid;'; convert.style = 'display: solid;'; options.style = 'margin-bottom: 0px;'; clear_inputs() }
-            if (current_cycle == 'dual') { compression_ratio.style = 'display: solid;'; cut_off_ratio.style = 'display: solid;'; pressure_ratio.style = 'display: solid;'; convert.style = 'display: none;'; options.style = 'margin-bottom: -20px;'; clear_inputs() }
-        }
-        function calculate() {
-            if (current_cycle == 'otto') { if (compression_ratio.value != '') { if (parseFloat(compression_ratio.value) == 0) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Otto Cycle Ratio cannot be 0</span>' } else { if (current_convert == "ratio") { otto() } else { otto_rev() } } } }
-            if (current_cycle == 'diesel') { if ((compression_ratio.value != '') && (cut_off_ratio.value != '')) { if ((parseFloat(compression_ratio.value) == 0) || (parseFloat(cut_off_ratio.value) == 0)) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Diesel Cycle Ratio cannot be 0</span>' } else { diesel() } } }
-            if (current_cycle == 'brayton') { if (pressure_ratio.value != '') { if ((parseFloat(pressure_ratio.value) == 0)) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Brayton Cycle Compression Ratio cannot be 0</span>' } else { if (current_convert == "ratio") { brayton() } else { brayton_rev() } } } }
-            if (current_cycle == 'dual') { if ((compression_ratio.value != '') && (cut_off_ratio.value != '') && (pressure_ratio.value != '')) { if ((parseFloat(compression_ratio.value) == 0) || (parseFloat(cut_off_ratio.value) == 0) || (parseFloat(pressure_ratio.value) == 0)) { output.innerHTML = '<span id="efficiency_error" class="efficiency_error">The Practical Application of Dual Cycle Ratio cannot be 0</span>' } else { dual() } } }
-        }
-        function otto() { output.innerHTML = `Otto Cycle Efficiency Value is<br><span id='efficiency' class='efficiency'>${((1-(1/(Math.pow(compression_ratio.value,(GAMMA-1)))))*100).toFixed(2)} %</span>` }
-        function otto_rev() { output.innerHTML = `Otto Cycle Ratio Value is<br><span id='efficiency' class='efficiency'>${(Math.pow((1/(1-(compression_ratio.value/100))), 1/(GAMMA-1))).toFixed(2)}</span>` }
-        function diesel() { output.innerHTML = `Diesel Cycle Efficiency Value is<br><span id='efficiency' class='efficiency'>${((1-((Math.pow(cut_off_ratio.value,GAMMA)-1)/((GAMMA*Math.pow(compression_ratio.value,(GAMMA-1)))*(cut_off_ratio.value-1))))*100).toFixed(2)} %</span>` }
-        function brayton() { output.innerHTML = `Brayton Cycle Efficiency Value is<br><span id='efficiency' class='efficiency'>${((1-(1/(Math.pow(pressure_ratio.value,((GAMMA-1)/GAMMA)))))*100).toFixed(2)} %</span>` }
-        function brayton_rev() { output.innerHTML = `Brayton Cycle Ratio Value is<br><span id='efficiency' class='efficiency'>${(Math.pow((1/(1-(pressure_ratio.value/100))), GAMMA/(GAMMA-1))).toFixed(2)} </span>` }
-        function dual() { output.innerHTML = `Dual Cycle Efficiency Value is<br><span id='efficiency' class='efficiency'>${((1-(((Math.pow(cut_off_ratio.value,GAMMA)*pressure_ratio.value)-1)/(Math.pow(compression_ratio.value,(GAMMA-1))*((pressure_ratio.value-1)+(GAMMA*pressure_ratio.value*(cut_off_ratio.value-1))))))*100).toFixed(2)} %</span>` }
-        function clear_inputs() { convert.value = 'ratio'; current_convert = 'ratio'; compression_ratio.placeholder = 'Compression Ratio'; pressure_ratio.placeholder = 'Pressure Ratio'; output.innerText = ""; compression_ratio.value = ""; cut_off_ratio.value = ""; pressure_ratio.value = "" }
-        document.addEventListener("keypress", function(event) { if (event.key === "Enter") { event.preventDefault(); document.getElementById("calculate").click();}})
-        fetch('https://api.countapi.xyz/hit/yuvarajatd').then(function (response) { return response.json(); }).then(function (data) { document.getElementById("visitors").innerHTML = `Visitors - ${data.value}` })
+        setTimeout(() => {document.location.replace('https://td.yuvaraja28.me')}, 5000)
+        setTimeout(() => {document.getElementById('seconds').innerText = 5}, 1*1000)
+        setTimeout(() => {document.getElementById('seconds').innerText = 4}, 2*1000)
+        setTimeout(() => {document.getElementById('seconds').innerText = 3}, 3*1000)
+        setTimeout(() => {document.getElementById('seconds').innerText = 2}, 4*1000)
+        setTimeout(() => {document.getElementById('seconds').innerText = 1}, 5*1000)
     </script>
 </body>
 </html>
