@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVIT Student's Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <style>
+        body {
+            display: flex; flex-direction: row; align-items: center; justify-content: center; margin-top: 10em;
+            background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
+        }
+        .login {
+            display: flex; flex-direction: column;
+            align-items: center; margin: 10px; border: 5px solid white;
+            padding: 20px; border-radius: 20px;
+        }
+        .head { font-family: "Kanit"; text-align: center; font-size: 22px; font-weight: 500; }
+        .head-2 { font-size: 19px; font-weight: 500; }
+        .heading { font-family: "Kanit"; text-align: left; font-size: 20px; font-weight: 400; margin-left: 20px; }
+        .form-inp { display: flex; flex-direction: column; margin: 5px; }
+        input { font-family: "Kanit"; width: 20em; color: black; background: white; border: 2px solid white; border-radius: 20px; padding: 8px; }
+        .submit {
+            font-family: "Kanit"; text-align: center; font-size: 18px;
+            font-weight: 400; margin: 10px; border: 2px solid white; border: 2.5px solid black; border-radius: 20px; width: 50%;
+        }
+    </style>
+    <div class="login">
+        <span class="head">Manakula Vinayagar<br>Institute of Technology</span> <br>
+        <span class="head head-2">Student's Login Portal</span><br>
+        <div class="form-inp">
+            <span class="heading">Email</span>
+            <input  title="email" type="text">
+        </div>
+        <div class="form-inp">
+            <span class="heading">Password</span>
+            <input title="password" type="password">
+        </div>
+        <button class="submit">Submit</button>
+    </div>
+</body>
+</html>
