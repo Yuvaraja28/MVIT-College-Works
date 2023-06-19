@@ -1,6 +1,6 @@
 import copy
 
-class InverseMatrix:
+class DiagonalizeMatrix:
     def __init__(self):
         self.trace = 0
         self.determinant = 0
@@ -163,13 +163,13 @@ class InverseMatrix:
             print(f"\t\t|\t{diagonalized[2][0]:.2f}\t{diagonalized[2][1]:.2f}\t{diagonalized[2][2]:.2f}\t|")            
             return diagonalized
         except (ZeroDivisionError, OverflowError, ArithmeticError):
-            print("Error Occured while Solving the Given Data's")
+            print("Error Occured while Solving the Matrix with the Given Data\nProbably Invalid Matrix Supplied")
 print("\n\tProgarm to Diagonalize the Matrix")
 print("\tCoded by Yuvaraja.M CSE-B Ist Year")
 while True:
     try:
         print("\n")
-        matrix = InverseMatrix()
+        matrix = DiagonalizeMatrix()
     except KeyboardInterrupt:
-        print("\nThanks for using my Program to Find the Inverse of the Matrix\n")
+        print("\nThanks for using my Program to Find the Diagonalize of the Matrix\n")
         break
