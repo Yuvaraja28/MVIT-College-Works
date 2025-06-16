@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Consumption Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            padding: 1rem;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .content-wrapper {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 p-4">
+    <div class="sticky-header text-white flex justify-between items-center">
+        <h2 class="text-xl md:text-2xl flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-8 md:h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Power Consumption and Carbon Footprint Calculator
+        </h2>
+        <div class="flex flex-col items-end text-sm md:text-lg">
+            <div id="totalConsumption">Total: 0 kWh/day</div>
+            <div id="totalEmissions">Carbon Emissions: 0 kg CO2/day</div>
+        </div>
+    </div>
+
+    <div class="content-wrapper max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="p-4 md:p-6">
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+        </div>
+    </div>
+
+    <script>
+        const appliances = [
+            { name: 'Lamp', watts: [40, 60, 100], image: ' https://media.gettyimages.com/id/182370767/photo/profile-of-yellow-desk-lamp-turned-or' },
+            { name: 'Ceiling Fan', watts: [75, 100], image: 'https://source.unsplash.com/200x150/?ceiling-fan ' },
+            { name: 'Table Fan', watts: [50, 75], image: 'https://source.unsplash.com/200x150/?fan' },
+            { name: 'TV', watts: [100, 150, 200], image: 'https://source.unsplash.com/200x150/?tv' },
+            { name: 'Refrigerator', watts: [150, 200, 250], image: 'https://source.unsplash.com/200x150/?refrigerator' },
+            { name: 'Air Conditioner', watts: [1000, 1500, 2000], image: 'https://source.unsplash.com/200x150/?air-conditioner' },
+            { name: 'Electric Iron', watts: [750, 1000], image: 'https://source.unsplash.com/200x150/?iron' },
+            { name: 'Personal Computer', watts: [150, 200, 300], image: 'https://source.unsplash.com/200x150/?computer' },
+            { name: 'Washing Machine', watts: [500, 750], image: 'https://source.unsplash.com/200x150/?washing-machine' },
+            { name: 'Water Pump', watts: [750, 1000, 1500], image: 'https://source.unsplash.com/200x150/?water-pump' },
+            { name: 'Microwave Oven', watts: [800, 1000, 1200], image: 'https://source.unsplash.com/200x150/?microwave' },
+            { name: 'Water Heater', watts: [2000, 2500], image: 'https://source.unsplash.com/200x150/?water-heater' },
+            { name: 'others', watts:[], image: "https://source.unsplash.com/200x150/?water-heater" }
+        ];
+
+        const container = document.querySelector('.grid');
+        
+        function calculateConsumption() {
+            let totalConsumption = 0;
+            document.querySelectorAll('.appliance').forEach(appliance => {
+                const wattSelect = appliance.querySelector('.appliance-watts');
+                const customWattInput = appliance.querySelector('.appliance-custom-watts');
+                const watts = wattSelect.value === "custom" ?
+                    parseFloat(customWattInput.value) || 0 :
+                    parseFloat(wattSelect.value) || 0;
+                const quantity = parseInt(appliance.querySelector('.appliance-quantity').value) || 1;
+                const hours = parseInt(appliance.querySelector('.appliance-hours').value) || 0;
+                const minutes = parseInt(appliance.querySelector('.appliance-minutes').value) || 0;
+                const dailyConsumption = (watts * quantity * (hours + minutes / 60)) / 1000;
+                appliance.querySelector('.appliance-consumption').textContent = dailyConsumption.toFixed(2);
+                totalConsumption += dailyConsumption;
+            });
+            const carbonEmissions = totalConsumption * 0.82;
+            document.getElementById('totalConsumption').textContent = `Total: ${totalConsumption.toFixed(2)} kWh/day`;
+            document.getElementById('totalEmissions').textContent = `Carbon Emissions: ${carbonEmissions.toFixed(2)} kg CO2/day`;
+        }
+
+        appliances.forEach(appliance => {
+            const div = document.createElement('div');
+            div.classList.add('p-4', 'bg-gray-100', 'rounded-lg', 'shadow', 'appliance');
+            div.innerHTML = `
+                <img src="${appliance.image}" alt="${appliance.name}" class="w-full h-32 object-cover rounded mb-2">
+                <h3 class="font-medium text-blue-700 mb-2">${appliance.name}</h3>
+                <label class="text-sm text-gray-600">Power Rating (Watts)</label>
+                <select class="w-full p-2 border rounded mt-1 appliance-watts">
+                    <option value="">-Select-</option>
+                    ${appliance.watts.map(watt => `<option value="${watt}">${watt}W</option>`).join('')}
+                    <option value="custom">Custom</option>
+                </select>
+                <input type="number" class="w-full mt-2 p-2 border rounded appliance-custom-watts" placeholder="Enter custom watts" style="display: none;">
+                <label class="text-sm text-gray-600 mt-2">Quantity</label>
+                <input type="number" class="w-full p-2 border rounded appliance-quantity" min="1" value="1">
+                <label class="text-sm text-gray-600 mt-2">Usage Time</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="number" min="0" max="24" class="w-full p-2 border rounded appliance-hours" placeholder="Hours">
+                    <input type="number" min="0" max="59" class="w-full p-2 border rounded appliance-minutes" placeholder="Minutes">
+                </div>
+                <label class="text-sm text-gray-600 mt-2">Daily Consumption (kWh)</label>
+                <div class="p-2 bg-gray-50 rounded text-blue-700 font-medium appliance-consumption">0</div>
+            `;
+            container.appendChild(div);
+            div.querySelector('.appliance-watts').addEventListener('change', (event) => {
+                div.querySelector('.appliance-custom-watts').style.display = event.target.value === "custom" ? "block" : "none";
+            });
+            div.querySelectorAll('input, select').forEach(input => {
+                input.addEventListener('input', calculateConsumption);
+            });
+        });
+    </script>
+</body>
+</html>
